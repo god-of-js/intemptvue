@@ -1,4 +1,5 @@
 <template>
+  <!-- using one button for the whole project incase of a redesign so it can easily be changed as opposed to changing the button in several places and this method can easily be extended as well. -->
   <v-btn
     :loading="loading"
     :large="large"

@@ -47,11 +47,13 @@ export default {
   },
   mounted() {
     if (this.isEditable) {
+      // assigning the previous data to the input so that they can be edited instead of recreated.
       this.assignVariablesIfEdit();
     }
   },
   methods: {
     checkFunction() {
+      // checking to see if it's creating a new story or editing a previous one
       this.isEditable ? this.updateStory() : this.publishStory();
     },
     async publishStory() {

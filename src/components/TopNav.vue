@@ -6,16 +6,22 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn href="https://www.intempt.com" target="_blank" text>
-      <span class="mr-2">Company website</span>
-      <v-icon>mdi-open-in-new</v-icon>
-    </v-btn>
+    <v-btn @click.native="setModal" text> Write A Story </v-btn>
   </v-app-bar>
 </template>
 
 <script>
+import { SET_ACTIVE_MODAL } from "@/store/mutations.types";
 export default {
   name: "TopNav",
+  methods: {
+    setModal() {
+      this.$store.commit(SET_ACTIVE_MODAL, {
+        activeModal: "AddStory",
+        isModalActive: true,
+      });
+    },
+  },
 };
 </script>
 

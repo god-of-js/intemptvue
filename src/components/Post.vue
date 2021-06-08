@@ -11,7 +11,7 @@
       :to="{ name: 'Post', params: { id: post.id } }"
       class="no-link"
     >
-      <custom-button v-text="'View Story'" class="ma-3" :text="true" />
+      <custom-button v-text="'View Story'" class="ma-3 card-btn" :text="true" />
     </router-link>
   </v-card>
 </template>
@@ -24,6 +24,7 @@ export default {
     post: {
       type: Object,
       default: () => {},
+      required: true,
     },
   },
   components: {
@@ -35,5 +36,14 @@ export default {
 <style lang="scss" scoped>
 .no-link {
   text-decoration: none;
+}
+.post {
+  height: 100%;
+  position: relative;
+}
+.card-btn {
+  position: absolute;
+  bottom: 0;
+  margin-top: 15px;
 }
 </style>

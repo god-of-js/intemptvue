@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import router from "@/router";
 import apiService from "@/plugins/api";
+// Making use of variables for store names for single source of truth. I only get to change it at one point and it changes everywhere as opposed to changing it everywhere when time for change comes.
 import {
   PUBLISH_BLOG_POST,
   GET_BLOG_POST,
@@ -50,6 +51,7 @@ export default new Vuex.Store({
         context.dispatch(GET_BLOG_POSTS);
         context.commit(SET_ACTIVE_MODAL, {});
         alert("Blog Post added successfully.");
+        // Resolving to alert component that the process has been completed;
         return Promise.resolve(apiResponse);
       } catch (err) {
         return Promise.reject(err);
@@ -62,6 +64,7 @@ export default new Vuex.Store({
         context.dispatch(GET_BLOG_POST);
         context.commit(SET_ACTIVE_MODAL, {});
         alert("Blog Post updated successfully");
+        // Resolving to alert component that the process has been completed;
         return Promise.resolve(apiResponse);
       } catch (err) {
         return Promise.reject(err);
@@ -71,7 +74,9 @@ export default new Vuex.Store({
       try {
         const apiResponse = await apiService.delete(`/posts/${id}`);
         context.dispatch(GET_BLOG_POSTS);
+        // Taking it back to the normal page since the present page has been deleted.
         router.push({ name: "Home" });
+        // Resolving to alert component that the process has been completed;
         return Promise.resolve(apiResponse);
       } catch (err) {
         return Promise.reject(err);

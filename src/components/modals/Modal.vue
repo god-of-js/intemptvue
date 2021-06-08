@@ -6,6 +6,7 @@
           ><v-icon>mdi-close</v-icon>
         </custom-button>
       </div>
+      <!-- dynamically placing modal components once they are requested from the application -->
       <component :is="activeModal" />
     </v-card>
   </modal-wrapper>

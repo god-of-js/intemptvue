@@ -1,4 +1,5 @@
 <template>
+  <!-- The naming convention with an underscore at the front is to alert that this is a file that makes use of a dynamic ID -->
   <div class="post">
     <v-col cols="12" lg="6" class="mx-auto">
       <header>

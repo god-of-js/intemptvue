@@ -1,6 +1,8 @@
 <template>
   <v-app-bar app color="primary" dark>
-    <img src="../assets/logo.svg" alt="" width="120" />
+    <router-link :to="{ name: 'Home' }">
+      <v-img src="../assets/logo.svg" alt="" width="120"
+    /></router-link>
 
     <v-spacer></v-spacer>
 

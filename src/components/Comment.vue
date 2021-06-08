@@ -12,7 +12,7 @@ export default {
   props: {
     comment: {
       type: Object,
-      default: () => {},
+      required: true,
     },
   },
 };

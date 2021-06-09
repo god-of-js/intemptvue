@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import apiService from "@/plugins/api";
+import api from "@/plugins/api";
 // Making use of variables for store names for single source of truth. I only get to change it at one point and it changes everywhere as opposed to changing it everywhere when time for change comes.
 import {
   PUBLISH_BLOG_POST,
@@ -55,7 +55,7 @@ export default new Vuex.Store({
   actions: {
     async [PUBLISH_BLOG_POST](context, postData) {
       try {
-        const apiResponse = await apiService.post("/posts", postData);
+        const apiResponse = await api.post("/posts", postData);
         // activating the snackbar component
         context.commit(SET_SNACK_BAR, {
           text: "Blog Post created successfully.",
@@ -69,7 +69,7 @@ export default new Vuex.Store({
     },
     async [EDIT_BLOG_POST](context, postData) {
       try {
-        const apiResponse = await apiService.put(
+        const apiResponse = await api.put(
           `/posts/${context.state.commonData.id}`,
           postData
         );
@@ -87,7 +87,7 @@ export default new Vuex.Store({
     },
     async [DELETE_BLOG_POST](context, { id }) {
       try {
-        const apiResponse = await apiService.delete(`/posts/${id}`);
+        const apiResponse = await api.delete(`/posts/${id}`);
         // activating the snackbar component
         context.commit(SET_SNACK_BAR, {
           text: "Blog Post deleted successfully.",
@@ -99,15 +99,15 @@ export default new Vuex.Store({
       }
     },
     async [GET_COMMENTS](context, { id }) {
-      const comments = await apiService.get(`/posts/${id}/comments`);
+      const comments = await api.get(`/posts/${id}/comments`);
       context.commit(SET_COMMENTS, comments);
     },
     async [GET_BLOG_POST](context, id) {
-      const post = await apiService.get(`/posts/${id}`);
+      const post = await api.get(`/posts/${id}`);
       context.commit(SET_POST, post);
     },
     async [GET_BLOG_POSTS](context) {
-      const posts = await apiService.get("/posts");
+      const posts = await api.get("/posts");
       context.commit(SET_POSTS, posts);
     },
   },

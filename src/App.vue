@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <!-- I didn't get to make use of scss so much because I went with pure material design But I guess I would show my strengths in SCSS during the SCSS test. best Regards -->
     <top-nav />
     <v-main>
       <router-view />

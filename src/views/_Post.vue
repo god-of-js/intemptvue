@@ -45,7 +45,7 @@ import {
   DELETE_BLOG_POST,
   GET_COMMENTS,
 } from "@/store/actions.types";
-import { SET_ACTIVE_MODAL } from "@/store/mutations.types";
+import { SET_ACTIVE_MODAL, SET_SNACK_BAR } from "@/store/mutations.types";
 import CustomButton from "@/components/CustomButton.vue";
 import Comment from "@/components/Comment.vue";
 let id;
@@ -75,7 +75,11 @@ export default {
       try {
         await this.$store.dispatch(DELETE_BLOG_POST, { id });
       } catch (err) {
-        alert(err);
+        // activating the snackbar component
+        this.$store.commit(SET_SNACK_BAR, {
+          text: err,
+          color: "",
+        });
       }
       this.loading = false;
     },

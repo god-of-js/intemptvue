@@ -16,6 +16,7 @@ import {
   SET_POSTS,
   SET_POST,
   SET_COMMENTS,
+  SET_SNACK_BAR,
 } from "./mutations.types";
 Vue.use(Vuex);
 
@@ -27,6 +28,10 @@ export default new Vuex.Store({
     post: {},
     comments: [],
     commonData: {},
+    snackBar: {
+      color: "",
+      text: "",
+    },
   },
   mutations: {
     [SET_ACTIVE_MODAL](state, params) {
@@ -43,6 +48,10 @@ export default new Vuex.Store({
     [SET_COMMENTS](state, params) {
       state.comments = params;
     },
+    [SET_SNACK_BAR](state, { text = "", color = "" }) {
+      state.snackBar.text = text;
+      state.snackBar.color = color;
+    },
   },
   actions: {
     async [PUBLISH_BLOG_POST](context, postData) {
@@ -50,7 +59,11 @@ export default new Vuex.Store({
         const apiResponse = await apiService.post("/posts", postData);
         context.dispatch(GET_BLOG_POSTS);
         context.commit(SET_ACTIVE_MODAL, {});
-        alert("Blog Post added successfully.");
+        // activating the snackbar component
+        context.commit(SET_SNACK_BAR, {
+          text: "Blog Post created successfully.",
+          color: "",
+        });
         // Resolving to alert component that the process has been completed;
         return Promise.resolve(apiResponse);
       } catch (err) {
@@ -63,7 +76,11 @@ export default new Vuex.Store({
         const apiResponse = await apiService.put(`/posts/${id}`, postData);
         context.dispatch(GET_BLOG_POST);
         context.commit(SET_ACTIVE_MODAL, {});
-        alert("Blog Post updated successfully");
+        // activating the snackbar component
+        context.commit(SET_SNACK_BAR, {
+          text: "Blog Post edited successfully.",
+          color: "",
+        });
         // Resolving to alert component that the process has been completed;
         return Promise.resolve(apiResponse);
       } catch (err) {
@@ -74,9 +91,13 @@ export default new Vuex.Store({
       try {
         const apiResponse = await apiService.delete(`/posts/${id}`);
         context.dispatch(GET_BLOG_POSTS);
+        // activating the snackbar component
+        context.commit(SET_SNACK_BAR, {
+          text: "Blog Post deleted successfully.",
+          color: "",
+        });
         // Taking it back to the normal page since the present page has been deleted.
         router.push({ name: "Home" });
-        // Resolving to alert component that the process has been completed;
         return Promise.resolve(apiResponse);
       } catch (err) {
         return Promise.reject(err);

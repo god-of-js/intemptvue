@@ -25,6 +25,7 @@
 <script>
 import { mapState } from "vuex";
 import { PUBLISH_BLOG_POST, EDIT_BLOG_POST } from "@/store/actions.types.js";
+import { SET_SNACK_BAR } from "@/store/mutations.types.js";
 import CustomButton from "../CustomButton.vue";
 export default {
   data: () => {
@@ -70,7 +71,11 @@ export default {
       try {
         await this.$store.dispatch(EDIT_BLOG_POST, this.data);
       } catch (err) {
-        alert(err);
+        // activating the snackbar component
+        this.$store.commit(SET_SNACK_BAR, {
+          text: err,
+          color: "",
+        });
       }
       this.loading = false;
     },

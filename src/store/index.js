@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import router from "@/router";
 import apiService from "@/plugins/api";
 // Making use of variables for store names for single source of truth. I only get to change it at one point and it changes everywhere as opposed to changing it everywhere when time for change comes.
 import {
@@ -57,8 +56,6 @@ export default new Vuex.Store({
     async [PUBLISH_BLOG_POST](context, postData) {
       try {
         const apiResponse = await apiService.post("/posts", postData);
-        context.dispatch(GET_BLOG_POSTS);
-        context.commit(SET_ACTIVE_MODAL, {});
         // activating the snackbar component
         context.commit(SET_SNACK_BAR, {
           text: "Blog Post created successfully.",
@@ -72,10 +69,11 @@ export default new Vuex.Store({
     },
     async [EDIT_BLOG_POST](context, postData) {
       try {
-        const id = router.history.current.params.id;
-        const apiResponse = await apiService.put(`/posts/${id}`, postData);
+        const apiResponse = await apiService.put(
+          `/posts/${context.state.commonData.id}`,
+          postData
+        );
         context.commit(SET_POST, apiResponse);
-        context.commit(SET_ACTIVE_MODAL, {});
         // activating the snackbar component
         context.commit(SET_SNACK_BAR, {
           text: "Blog Post edited successfully.",
@@ -90,14 +88,11 @@ export default new Vuex.Store({
     async [DELETE_BLOG_POST](context, { id }) {
       try {
         const apiResponse = await apiService.delete(`/posts/${id}`);
-        context.dispatch(GET_BLOG_POSTS);
         // activating the snackbar component
         context.commit(SET_SNACK_BAR, {
           text: "Blog Post deleted successfully.",
           color: "",
         });
-        // Taking it back to the normal page since the present page has been deleted.
-        router.push({ name: "Home" });
         return Promise.resolve(apiResponse);
       } catch (err) {
         return Promise.reject(err);
@@ -107,8 +102,7 @@ export default new Vuex.Store({
       const comments = await apiService.get(`/posts/${id}/comments`);
       context.commit(SET_COMMENTS, comments);
     },
-    async [GET_BLOG_POST](context) {
-      const id = router.history.current.params.id;
+    async [GET_BLOG_POST](context, id) {
       const post = await apiService.get(`/posts/${id}`);
       context.commit(SET_POST, post);
     },

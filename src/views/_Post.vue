@@ -44,6 +44,7 @@ import {
   GET_BLOG_POST,
   DELETE_BLOG_POST,
   GET_COMMENTS,
+  GET_BLOG_POSTS,
 } from "@/store/actions.types";
 import { SET_ACTIVE_MODAL, SET_SNACK_BAR } from "@/store/mutations.types";
 import CustomButton from "@/components/CustomButton.vue";
@@ -61,7 +62,7 @@ export default {
   },
   mounted() {
     id = this.$route.params.id;
-    this.$store.dispatch(GET_BLOG_POST);
+    this.$store.dispatch(GET_BLOG_POST, id);
     this.$store.dispatch(GET_COMMENTS, { id });
   },
   components: {
@@ -74,6 +75,8 @@ export default {
       // In a normal scenario, a pop up would be here to ask if user is sure but considering the data present is inconsequential and for test purposes, it would be neglected.
       try {
         await this.$store.dispatch(DELETE_BLOG_POST, { id });
+        this.$store.dispatch(GET_BLOG_POSTS);
+        this.$router.push({ name: "Home" });
       } catch (err) {
         // activating the snackbar component
         this.$store.commit(SET_SNACK_BAR, {
@@ -87,7 +90,7 @@ export default {
       this.$store.commit(SET_ACTIVE_MODAL, {
         activeModal: "AddStory",
         isModalActive: true,
-        commonData: { edit: true, data: this.post },
+        commonData: { edit: true, data: this.post, id },
       });
     },
   },

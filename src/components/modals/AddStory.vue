@@ -24,8 +24,12 @@
 
 <script>
 import { mapState } from "vuex";
-import { PUBLISH_BLOG_POST, EDIT_BLOG_POST } from "@/store/actions.types.js";
-import { SET_SNACK_BAR } from "@/store/mutations.types.js";
+import {
+  PUBLISH_BLOG_POST,
+  EDIT_BLOG_POST,
+  GET_BLOG_POSTS,
+} from "@/store/actions.types.js";
+import { SET_SNACK_BAR, SET_ACTIVE_MODAL } from "@/store/mutations.types.js";
 import CustomButton from "../CustomButton.vue";
 export default {
   data: () => {
@@ -61,6 +65,8 @@ export default {
       this.loading = true;
       try {
         await this.$store.dispatch(PUBLISH_BLOG_POST, this.data);
+        this.$store.dispatch(GET_BLOG_POSTS);
+        this.$store.commit(SET_ACTIVE_MODAL, {});
       } catch (err) {
         alert(err);
       }
@@ -70,6 +76,7 @@ export default {
       this.loading = true;
       try {
         await this.$store.dispatch(EDIT_BLOG_POST, this.data);
+        this.$store.commit(SET_ACTIVE_MODAL, {});
       } catch (err) {
         // activating the snackbar component
         this.$store.commit(SET_SNACK_BAR, {

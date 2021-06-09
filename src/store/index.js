@@ -74,7 +74,6 @@ export default new Vuex.Store({
       try {
         const id = router.history.current.params.id;
         const apiResponse = await apiService.put(`/posts/${id}`, postData);
-        console.log(apiResponse);
         context.commit(SET_POST, apiResponse);
         context.commit(SET_ACTIVE_MODAL, {});
         // activating the snackbar component

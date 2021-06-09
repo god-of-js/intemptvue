@@ -36,8 +36,8 @@ export default new Vuex.Store({
   mutations: {
     [SET_ACTIVE_MODAL](state, params) {
       state.isModalActive = params.isModalActive || false;
-      state.activeModal = params.activeModal || false;
-      state.commonData = params.commonData || false;
+      state.activeModal = params.activeModal || "";
+      state.commonData = params.commonData || {};
     },
     [SET_POSTS](state, params) {
       state.posts = params;

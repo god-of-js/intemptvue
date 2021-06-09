@@ -6,14 +6,18 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn @click.native="setModal" text> Write A Story </v-btn>
+    <custom-button @click.native="setModal" :text="true" color="">
+      Write A Story
+    </custom-button>
   </v-app-bar>
 </template>
 
 <script>
 import { SET_ACTIVE_MODAL } from "@/store/mutations.types";
+import CustomButton from "./CustomButton.vue";
 export default {
   name: "TopNav",
+  components: { CustomButton },
   methods: {
     setModal() {
       this.$store.commit(SET_ACTIVE_MODAL, {
